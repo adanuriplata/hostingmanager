@@ -5,7 +5,7 @@ export const LoaderContext = createContext();
 export const LoaderProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const drawerWidth = open ? 180 : 70;
+  const drawerWidth = open ? 190 : 70;
 
   const handleDrawerToggle = (): void => {
     setOpen(!open);

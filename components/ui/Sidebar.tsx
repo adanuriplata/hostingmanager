@@ -3,7 +3,7 @@ import { Box, Divider, Drawer, Toolbar } from '@mui/material';
 
 import { LoaderContext } from '../common/Loader/LoaderContext';
 import { mainMenu } from '../../menus/mainMenu';
-import Menu from './Menu';
+import SideBarMenu from './SideBarMenu';
 
 export const Sidebar = (): JSX.Element => {
   const { drawerWidth } = useContext(LoaderContext);
@@ -13,15 +13,15 @@ export const Sidebar = (): JSX.Element => {
       sx={{
         width: drawerWidth,
         flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
       }}
     >
       <Toolbar />
-      <Box sx={{ overflow: 'auto' }}>
-        <Menu itemsMenu={mainMenu} />
-        <Divider />
-        <Menu itemsMenu={mainMenu} />
-      </Box>
+      <SideBarMenu itemsMenu={mainMenu} />
+      <Divider />
+      <SideBarMenu itemsMenu={mainMenu} />
     </Drawer>
   );
 };
