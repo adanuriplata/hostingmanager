@@ -1,13 +1,15 @@
+import { PostgrestError } from '@supabase/supabase-js';
 import { useContext, useEffect, useState } from 'react';
 import { LoaderContext } from '../components/common/Loader/LoaderContext';
 import { supabase } from '../supabase';
+import { IProducts } from '../types';
 
 export const useGetProducts = (): {
-  products: undefined;
-  error: undefined;
+  products: IProducts[] | undefined;
+  isError: PostgrestError | null | undefined;
 } => {
-  const [products, setProducts] = useState();
-  const [error, setError] = useState();
+  const [products, setProducts] = useState<IProducts[]>();
+  const [isError, setIsError] = useState<PostgrestError | null>();
   const { setIsLoading } = useContext(LoaderContext);
   useEffect(() => {
     const getProducts = async (): Promise<void> => {
@@ -19,11 +21,11 @@ export const useGetProducts = (): {
         setProducts(products);
         setIsLoading(false);
       } else {
-        setError(error);
+        setIsError(error);
         setIsLoading(false);
       }
     };
     void getProducts();
-  }, []);
-  return { products, error };
+  }, [setIsLoading]);
+  return { products, isError };
 };

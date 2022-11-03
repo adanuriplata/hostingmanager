@@ -3,11 +3,22 @@ import { DashboardLayout } from '../components/layouts';
 import MUIDataTable from 'mui-datatables';
 
 import { useGetProducts } from '../hooks';
-import { AddBox } from '@mui/icons-material';
+import { currency } from '../utils';
+// import { products } from '../fakeData/products';
+import { useMemo } from 'react';
 
 const Products = (): JSX.Element => {
-  const { products, error } = useGetProducts();
-  // const error = false;
+  const { products } = useGetProducts();
+
+  const formatProducts = useMemo(
+    () =>
+      products?.map((e) => ({
+        ...e,
+        price: currency(e.price),
+      })),
+    [products]
+  );
+
   const columns = [
     {
       name: 'id',
@@ -33,18 +44,21 @@ const Products = (): JSX.Element => {
         sort: true,
       },
     },
+    {
+      name: 'category',
+      label: 'Categoria',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
   ];
-  // const data = [
-  //   { id: 1, name: 'host esencial', price: '1350' },
-  //   { id: 1, name: 'host esencial', price: '1350' },
-  //   { id: 1, name: 'host esencial', price: '1350' },
-  //   { id: 1, name: 'host esencial', price: '1350' },
-  // ];
+
   const options = {
     filterType: 'checkbox',
   };
   return (
-    <DashboardLayout title={'Products'}>
+    <DashboardLayout title={'Productos'}>
       <Box
         sx={{
           display: 'flex',
@@ -55,22 +69,15 @@ const Products = (): JSX.Element => {
       >
         <Box sx={{ width: '100%' }}>
           <Paper elevation={3}>
-            {/* {error ? (
-            <p>Algo fallo</p>
-          ) : (
-            products?.map((e) => (
-              <div key={e.id}>
-                <p>{e.name}</p>
-                <p>{e.price}</p>
-              </div>
-            ))
-          )} */}
-            <MUIDataTable
-              title={'Productos'}
-              data={products}
-              columns={columns}
-              options={options}
-            />
+            {/* {error && <p>Algo fallo</p>} */}
+            {products != null && (
+              <MUIDataTable
+                title={'Productos'}
+                data={formatProducts as IProducts[]}
+                columns={columns}
+                options={options}
+              />
+            )}
           </Paper>
         </Box>
       </Box>

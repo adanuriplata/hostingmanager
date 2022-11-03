@@ -17,6 +17,6 @@ export const mainMenu: itemMenu[] = [
   {
     label: 'Contratos',
     icon: DescriptionIcon,
-    link: '/companies',
+    link: '/contracts',
   },
 ];
