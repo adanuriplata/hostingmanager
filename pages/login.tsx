@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import { supabase } from '../supabase';
 
 function Copyright(props: any): JSX.Element {
   return (
@@ -30,13 +31,14 @@ function Copyright(props: any): JSX.Element {
 }
 
 const Login = (): JSX.Element => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const { user, session, error } = await supabase.auth.signUp({
       email: data.get('email'),
       password: data.get('password'),
     });
+    console.log(user, session);
   };
 
   return (

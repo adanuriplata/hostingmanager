@@ -8,14 +8,21 @@ import type { AppProps } from 'next/app';
 import { LoaderProvider } from '../components/common/Loader/LoaderContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme } from '../themes';
+import { Provider } from 'react-redux';
+import { store } from '../store';
+import { Middleware } from '../components/common/Middleware';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <CssBaseline />
-      <LoaderProvider>
-        <Component {...pageProps} />
-      </LoaderProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={lightTheme}>
+        <CssBaseline />
+        <Middleware>
+          <LoaderProvider>
+            <Component {...pageProps} />
+          </LoaderProvider>
+        </Middleware>
+      </ThemeProvider>
+    </Provider>
   );
 }
