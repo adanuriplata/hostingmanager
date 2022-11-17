@@ -10,18 +10,15 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { lightTheme } from '../themes';
 import { Provider } from 'react-redux';
 import { store } from '../store';
-import { Middleware } from '../components/common/Middleware';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <Provider store={store}>
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
-        <Middleware>
-          <LoaderProvider>
-            <Component {...pageProps} />
-          </LoaderProvider>
-        </Middleware>
+        <LoaderProvider>
+          <Component {...pageProps} />
+        </LoaderProvider>
       </ThemeProvider>
     </Provider>
   );
